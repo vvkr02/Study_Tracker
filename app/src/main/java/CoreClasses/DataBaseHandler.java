@@ -49,34 +49,6 @@ public class DataBaseHandler extends AppCompatActivity {
     }
 
 
-    public void getUsers() {
-        String requestURL = serverURL + "selectUsers";
-        newRequestQueue(this.context).add(
-                new JsonArrayRequest(
-                        Request.Method.POST,
-                        requestURL,
-                        null,
-                        response -> {
-                            try {
-                                for (int i = 0; i < response.length(); i++) {
-                                    User user = new User(
-                                            response.getJSONObject(i).getInt("idUser"),
-                                            response.getJSONObject(i).getString("Username"),
-                                            response.getJSONObject(i).getString("Password"),
-                                            response.getJSONObject(i).getString("Name"),
-                                            response.getJSONObject(i).getInt("Score"),
-                                            response.getJSONObject(i).getString("Profilepic")
-                                    );
-                                    userList.add(user);
-                                }
-                            } catch (Exception e) {
-                                Log.d("JSONObject: ", e.getMessage(), e);
-                            }
-                        },
-                        e -> Log.d("DB: ", e.getMessage(), e)
-                ));
-    }
-
     public void getUserFromLogin(User user, final VolleyCallBack callBack) {
         ProgressDialog progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Checking, please wait...");
@@ -95,7 +67,7 @@ public class DataBaseHandler extends AppCompatActivity {
                             if (response.length() > 0) {
                                 for (int i = 0; i < response.length(); i++) {
                                     try {
-                                        DataBaseHandler.user = new User(
+                                        this.user = new User(
                                                 response.getJSONObject(i).getInt("idUser"),
                                                 response.getJSONObject(i).getString("Username"),
                                                 response.getJSONObject(i).getString("Password"),

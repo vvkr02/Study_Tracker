@@ -38,16 +38,15 @@ public class LoginActivity extends AppCompatActivity {
                 user, new VolleyCallBack() {
                     @Override
                     public void onSuccess() {
-                        User user = DataBaseHandler.user;
+                        User user = databasehandler.user;
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.putExtra("User", user);
                         startActivity(intent);
-                        Toast.makeText(LoginActivity.this, "R.string.login_success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFail() {
-                        Toast.makeText(LoginActivity.this, "R.string.login_fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Unable to login", Toast.LENGTH_SHORT).show();
                     }
                 }
         );

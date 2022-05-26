@@ -96,6 +96,12 @@ public class User implements Parcelable {
         return score;
     }
 
+    public String getScoreString(){
+        String temp="";
+        temp+=this.score;
+        return temp;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
