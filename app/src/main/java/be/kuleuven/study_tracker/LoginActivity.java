@@ -13,11 +13,11 @@ import CoreClasses.DataBaseHandler;
 import CoreClasses.User;
 import Interfaces.VolleyCallBack;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private Button btnLogin;
-    DataBaseHandler databasehandler = new DataBaseHandler(MainActivity.this);
+    DataBaseHandler databasehandler = new DataBaseHandler(LoginActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +39,24 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         User user = DataBaseHandler.user;
-                        Intent intent = new Intent(MainActivity.this, home.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.putExtra("User", user);
                         startActivity(intent);
-                        Toast.makeText(MainActivity.this, "R.string.login_success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "R.string.login_success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFail() {
-                        Toast.makeText(MainActivity.this, "R.string.login_fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "R.string.login_fail", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
 
+    }
+
+    public void onBtnRegister_Clicked(View caller)
+    {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 }

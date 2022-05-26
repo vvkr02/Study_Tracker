@@ -28,6 +28,14 @@ public class User implements Parcelable {
         this.profilePic = profilePic;
     }
 
+    public User(String username,String password,String name,String profilePic)
+    {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.profilePic = profilePic;
+    }
+
     public User(Parcel in)
     {
 

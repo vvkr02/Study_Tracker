@@ -4,19 +4,32 @@ import static com.android.volley.toolbox.Volley.newRequestQueue;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Interfaces.VolleyCallBack;
 
@@ -99,9 +112,49 @@ public class DataBaseHandler extends AppCompatActivity {
                                 callBack.onSuccess();
                             } else {
                                 callBack.onFail();
+                                progressDialog.dismiss();
                             }
                         },
                         error -> Log.d("DB: ", error.getMessage(), error)
                 ));
     }
+
+    public void registerUser(User user)
+    {
+
+        String imageString = user.getProfilePic();
+        ProgressDialog progressDialog = new ProgressDialog(this.context);
+        progressDialog.setMessage("Registering User");
+        progressDialog.show();
+        System.out.println(user);
+        String requestURL = serverURL + "add_user/";
+
+        //Execute the Volley call. Note that we are not appending the image string to the URL, that happens further below
+        newRequestQueue(this.context).add(new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Turn the progress widget off
+                progressDialog.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){ //NOTE THIS PART: here we are passing the parameter to the webservice, NOT in the URL!
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("var", imageString);
+                params.put("n",user.getName());
+                params.put("u",user.getUsername());
+                params.put("p",user.getPassword());
+                return params;
+            }
+        });
+        /*requestQueue.add(submitRequest);*/
+
+    }
+
 }
