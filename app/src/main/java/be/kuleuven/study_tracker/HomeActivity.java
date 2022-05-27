@@ -50,4 +50,10 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra("User", user);
         startActivity(intent);
     }
+
+    public void onBtnLogout_Clicked(View caller)
+    {
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+    }
 }

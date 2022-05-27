@@ -14,37 +14,37 @@ import Interfaces.VolleyCallBack;
 import be.kuleuven.study_tracker.GroupPageActivity;
 import be.kuleuven.study_tracker.R;
 
-public class CreateGroup extends AppCompatActivity {
+public class JoinGroup extends AppCompatActivity {
     private User user;
-    DataBaseHandler databasehandler = new DataBaseHandler(CreateGroup.this);
+    DataBaseHandler databasehandler = new DataBaseHandler(this);
     private EditText groupname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_team);
+        setContentView(R.layout.activity_join_group);
         user = getIntent().getParcelableExtra("User");
-        groupname = findViewById(R.id.groupname);
+        groupname = findViewById(R.id.edit_gname);
     }
 
-    public void onBtnCeateok_Clicked(View caller)
+    public void onBtnJoin_Clicked(View caller)
     {
-
-        databasehandler.createTeam(groupname.getText().toString(),
+        databasehandler.joinTeam(groupname.getText().toString(),
                 user, new VolleyCallBack() {
                     @Override
                     public void onSuccess() {
-                        Intent intent = new Intent(CreateGroup.this, GroupPageActivity.class);
+                        Intent intent = new Intent(JoinGroup.this, GroupPageActivity.class);
                         intent.putExtra("User", user);
-                        Toast.makeText(CreateGroup.this, "Group Created", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JoinGroup.this, "Joined Group", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                     }
 
                     @Override
                     public void onFail() {
-                        Toast.makeText(CreateGroup.this, "Unable to create Group", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JoinGroup.this, "Unable to join Group", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
+
     }
 }

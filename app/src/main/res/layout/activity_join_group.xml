@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupOperations.CreateGroup">
+    tools:context=".GroupOperations.JoinGroup">
 
     <TextView
         android:id="@+id/lbl_JoinTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Group"
+        android:text="Join Group"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,47 +20,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.367" />
 
-    <EditText
-        android:id="@+id/groupname"
-        android:layout_width="178dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:hint="Enter Group Name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lbl_GroupName"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_JoinTeam"
-        app:layout_constraintVertical_bias="0.084" />
-
     <TextView
         android:id="@+id/lbl_GroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Group Name:"
         android:textAllCaps="false"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/groupname"
+        app:layout_constraintEnd_toStartOf="@+id/edit_gname"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_JoinTeam"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintVertical_bias="0.114" />
 
     <Button
         android:id="@+id/btn_joinok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onBtnCeateok_Clicked"
-        android:text="Create"
+        android:layout_marginBottom="244dp"
+        android:onClick="onBtnJoin_Clicked"
+        android:text="Join"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/groupname"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_gname" />
+
+    <EditText
+        android:id="@+id/edit_gname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/btn_joinok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lbl_GroupName"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_JoinTeam" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
