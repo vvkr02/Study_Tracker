@@ -129,4 +129,30 @@ public class DataBaseHandler extends AppCompatActivity {
 
     }
 
+    public void createTeam(String gname,User user, final VolleyCallBack callBack)
+    {
+        ProgressDialog progressDialog = new ProgressDialog(this.context);
+        progressDialog.setMessage("Creating Team, please wait...");
+        progressDialog.show();
+        String requestURL = serverURL + "creategroup" + "/" +
+                gname + "/" +
+                user.getIdUser() + "/" +
+                "1" ;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            progressDialog.dismiss();
+                            callBack.onSuccess();
+                            },
+                        error -> {
+                            callBack.onFail();
+                            progressDialog.dismiss();
+                        }
+                ));
+
+    }
+
 }

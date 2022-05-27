@@ -2,10 +2,12 @@ package be.kuleuven.study_tracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +35,19 @@ public class HomeActivity extends AppCompatActivity {
         nameTxt.setText("Hello "+user.getName()+" !");
         scoreTxt.setText(user.getScoreString());
         profilePic.setImageBitmap(imageHandler.process(user.getProfilePic()));
+    }
 
+    public void onBtnTimer_Clicked(View caller)
+    {
+        Intent intent = new Intent(this,TimerActivity.class);
+        intent.putExtra("User", user);
+        startActivity(intent);
+    }
 
+    public void onBtnGroup_Clicked(View caller)
+    {
+        Intent intent = new Intent(this,GroupPageActivity.class);
+        intent.putExtra("User", user);
+        startActivity(intent);
     }
 }
