@@ -2,21 +2,21 @@ package be.kuleuven.study_tracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import CoreClasses.DataBaseHandler;
-import CoreClasses.ImageHandler;
+import CoreClasses.ImageProcessor;
 import CoreClasses.User;
-import Interfaces.VolleyCallBack;
 
 public class HomeActivity extends AppCompatActivity {
     private final DataBaseHandler dataBaseHandler = new DataBaseHandler(this);
-    private ImageHandler imageHandler = new ImageHandler(this);
+    private ImageProcessor imageHandler = new ImageProcessor();
     private User user;
     private TextView nameTxt,scoreTxt;
     private ImageView profilePic;
@@ -32,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         profilePic = findViewById(R.id.img_profilepic);
         nameTxt.setText("Hello "+user.getName()+" !");
         scoreTxt.setText(user.getScoreString());
+        profilePic.setImageBitmap(imageHandler.process(user.getProfilePic()));
 
 
     }

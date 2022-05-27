@@ -73,7 +73,7 @@ public class DataBaseHandler extends AppCompatActivity {
                                                 response.getJSONObject(i).getString("Password"),
                                                 response.getJSONObject(i).getString("Name"),
                                                 response.getJSONObject(i).getInt("Score"),
-                                                response.getJSONObject(i).getString("Profilepic")
+                                                response.getJSONObject(i).getString("Image")
                                         );
                                     } catch (JSONException e) {
                                         e.printStackTrace();
