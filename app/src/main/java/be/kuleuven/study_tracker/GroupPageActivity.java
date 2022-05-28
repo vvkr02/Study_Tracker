@@ -38,7 +38,6 @@ public class GroupPageActivity extends AppCompatActivity {
     private String group;
     private RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
-    private RecyclerAdapter.RecyclerViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +72,8 @@ public class GroupPageActivity extends AppCompatActivity {
 
     private void setRecyclerviewData() {
 
-        setOnClickListener();
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerAdapter = new RecyclerAdapter(groupMembers,listener);
+        recyclerAdapter = new RecyclerAdapter(groupMembers,user.getIdUser(),user);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -83,31 +81,7 @@ public class GroupPageActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    private void setOnClickListener() {
-        listener = new RecyclerAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), GroupMemberProfileViewActivity.class);
-                databasehandler.getBasicUserDetails(groupMembers.get(position),
-                        new VolleyCallBack() {
-                            @Override
-                            public void onSuccess() {
-                                BasicDetails basicDetails = databasehandler.basicDetails;
-                                intent.putExtra("User", user);
-                               intent.putExtra("BasicDetails",basicDetails);
-                               startActivity(intent);
-                            }
 
-                            @Override
-                            public void onFail() {
-
-                            }
-                        }
-                );
-
-            }
-        };
-    }
 
     private void getGroupMembersMap() {
 

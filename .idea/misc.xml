@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_challenge.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_create_team.xml" value="0.264" />
         <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_group_member_profile_view.xml" value="0.264" />
         <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_group_page.xml" value="0.264" />
@@ -12,7 +13,8 @@
         <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_profile_view.xml" value="0.264" />
         <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/activity_timer.xml" value="0.25" />
-        <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/row_item.xml" value="0.264" />
+        <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/popupbox.xml" value="0.2" />
+        <entry key="..\:/Users/vvkar/AndroidStudioProjects/Study_Tracker/app/src/main/res/layout/row_item.xml" value="0.4" />
       </map>
     </option>
   </component>

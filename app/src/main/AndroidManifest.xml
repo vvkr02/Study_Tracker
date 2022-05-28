@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Study_Tracker">
         <activity
+            android:name=".Challenge.GradeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Challenge.AnswerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Challenge.ChallengeActivity"
+            android:exported="false" />
+        <activity
             android:name=".GroupOperations.GroupMemberProfileViewActivity"
             android:exported="false" />
         <activity

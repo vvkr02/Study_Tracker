@@ -1,10 +1,13 @@
 package be.kuleuven.study_tracker.GroupRecyclerView;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,10 @@ import CoreClasses.DataBaseHandler;
 import CoreClasses.ImageProcessor;
 import CoreClasses.User;
 import Interfaces.VolleyCallBack;
+import be.kuleuven.study_tracker.Challenge.AnswerActivity;
+import be.kuleuven.study_tracker.Challenge.ChallengeActivity;
+import be.kuleuven.study_tracker.Challenge.GradeActivity;
+import be.kuleuven.study_tracker.GroupOperations.GroupMemberProfileViewActivity;
 import be.kuleuven.study_tracker.GroupOperations.JoinGroup;
 import be.kuleuven.study_tracker.GroupPageActivity;
 import be.kuleuven.study_tracker.ProfileViewActivity;
@@ -29,19 +36,24 @@ import be.kuleuven.study_tracker.R;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     Map<Integer,Integer> groupMembers;
+    User user;
     DataBaseHandler dataBaseHandler;
     ImageProcessor imageProcessor = new ImageProcessor();
-    private RecyclerViewClickListener listener;
+    Context context;
+    int second;
+    int first;
 
-    public RecyclerAdapter(Map<Integer,Integer> groupMembers,RecyclerViewClickListener listener) {
+    public RecyclerAdapter(Map<Integer,Integer> groupMembers,int first,User user) {
         this.groupMembers = groupMembers;
-        this.listener = listener;
+        this.first = first;
+        this.user = user;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.row_item,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -94,7 +106,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             name = itemView.findViewById(R.id.txt_name);
             score = itemView.findViewById(R.id.txt_score);
 
+
             itemView.setOnClickListener(this);
+
         }
 
 
@@ -102,9 +116,88 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-
-            listener.onClick(view,getAdapterPosition());
+            showDialog(getAdapterPosition());
 
         }
+    }
+
+    private void showDialog(int i) {
+
+        Dialog dialog = new Dialog(context, androidx.appcompat.R.style.Base_ThemeOverlay_AppCompat_Dialog);
+        dialog.setContentView(R.layout.popupbox);
+
+        Button profile = dialog.findViewById(R.id.btn_prof);
+        Button challenge = dialog.findViewById(R.id.btn_challenge);
+        Button answer = dialog.findViewById(R.id.btn_answer);
+        Button grade = dialog.findViewById(R.id.btn_grade);
+        Button close = dialog.findViewById(R.id.btn_close);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataBaseHandler.getBasicUserDetails(groupMembers.get(i),
+                        new VolleyCallBack() {
+                            @Override
+                            public void onSuccess() {
+                                BasicDetails basicDetails = dataBaseHandler.basicDetails;
+                                Intent intent = new Intent(context, GroupMemberProfileViewActivity.class);
+                                intent.putExtra("User", user);
+                                intent.putExtra("BasicDetails",basicDetails);
+                                context.startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFail() {
+
+                            }
+                        }
+                );
+            }
+        });
+
+        challenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChallengeActivity.class);
+                intent.putExtra("Current",first);
+                intent.putExtra("Target",groupMembers.get(i));
+                context.startActivity(intent);
+
+            }
+        });
+        answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AnswerActivity.class);
+                intent.putExtra("Current",first);
+                intent.putExtra("Target",groupMembers.get(i));
+                context.startActivity(intent);
+
+            }
+        });
+
+        grade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GradeActivity.class);
+                intent.putExtra("Current",first);
+                intent.putExtra("Target",groupMembers.get(i));
+                context.startActivity(intent);
+
+            }
+        });
+
+
+
+
+
+        dialog.show();
     }
 }

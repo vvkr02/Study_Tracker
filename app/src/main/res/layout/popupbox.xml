@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/btn_prof"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="View Profile" />
+
+    <Button
+        android:id="@+id/btn_challenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_prof"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Challenge"/>
+
+    <Button
+        android:id="@+id/btn_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_challenge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Answer" />
+
+    <Button
+        android:id="@+id/btn_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_answer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Grade" />
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x" />
+
+
+</RelativeLayout>
