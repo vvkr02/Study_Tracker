@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 
 import CoreClasses.DataBaseHandler;
+import CoreClasses.ImageProcessor;
 import CoreClasses.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView image;
     private int PICK_IMAGE_REQUEST = 111;
     private Bitmap bitmap;
+    ImageProcessor imageProcessor = new ImageProcessor();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,19 +40,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onBtnSubmit_Clicked(View view) {
-        //convert image to base64 string
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        User user = new User(username.getText().toString(),password.getText().toString(),name.getText().toString(),imageString);
 
+        User user = new User(username.getText().toString(),password.getText().toString(),name.getText().toString(),imageProcessor.toBase64(bitmap));
         dataBaseHandler.registerUser(user);
-
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
-
-
     }
 
 
@@ -75,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //getting image from gallery
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //Rescale the bitmap to 400px wide (avoid storing large images!)
-                bitmap = getResizedBitmap( bitmap, 400 );
+                bitmap = imageProcessor.getResizedBitmap( bitmap, 400);
 
                 //Setting image to ImageView
                 image.setImageBitmap(bitmap);
@@ -84,22 +78,5 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-    /**
-     * Helper method to create a rescaled bitmap. You enter a desired width, and the height is scaled uniformly
-     */
-    public Bitmap getResizedBitmap(Bitmap bm, int newWidth) {
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-        float scale = ((float) newWidth) / width;
 
-        // We create a matrix to transform the image
-        Matrix matrix = new Matrix();
-        matrix.postScale(scale, scale);
-
-        // Create the new bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(
-                bm, 0, 0, width, height, matrix, false);
-        bm.recycle();
-        return resizedBitmap;
-    }
 }
