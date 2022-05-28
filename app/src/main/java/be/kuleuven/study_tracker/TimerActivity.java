@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -30,6 +31,7 @@ public class TimerActivity extends AppCompatActivity {
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
     private int min =START_TIME_IN_MILLIS/60000;
     DataBaseHandler dataBaseHandler = new DataBaseHandler(this);
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,53 @@ public class TimerActivity extends AppCompatActivity {
 
         updateCountDownText();
 
+    }
+
+    public void play(View caller)
+    {
+        if(player == null)
+        {
+            player = MediaPlayer.create(this,R.raw.song);
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    stopPlayer();
+                }
+            });
+        }
+
+        player.start();
+
+    }
+    public void pause(View caller)
+    {
+        if(player!= null)
+        {
+            player.pause();
+        }
+    }
+    public void stop(View caller)
+    {
+
+        stopPlayer();
+
+    }
+
+    private void stopPlayer()
+    {
+        if(player !=null)
+        {
+            player.release();
+            player = null;
+            Toast.makeText(this, "Media player released", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopPlayer();
     }
 
     private void startTimer() {
