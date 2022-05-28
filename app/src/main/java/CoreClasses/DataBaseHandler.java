@@ -245,4 +245,24 @@ public class DataBaseHandler extends AppCompatActivity {
 
     }
 
+    public void updateScore(int scoreUpdate,int id,final VolleyCallBack callBack)
+    {
+        String requestURL = serverURL + "updatescore" + "/" +scoreUpdate+ "/" +id;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+
+                            callBack.onSuccess();
+                        },
+                        error -> {
+                            callBack.onFail();
+
+                        }
+                ));
+
+    }
+
 }
