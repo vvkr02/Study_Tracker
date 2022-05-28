@@ -245,6 +245,29 @@ public class DataBaseHandler extends AppCompatActivity {
 
     }
 
+    public void leaveGroup(int gmem,final VolleyCallBack callBack)
+    {
+        ProgressDialog progressDialog = new ProgressDialog(this.context);
+        progressDialog.setMessage("Leaving Group, please wait...");
+        progressDialog.show();
+        String requestURL = serverURL + "leavegroup" + "/" +gmem;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            progressDialog.dismiss();
+                            callBack.onSuccess();
+                        },
+                        error -> {
+                            callBack.onFail();
+                            progressDialog.dismiss();
+                        }
+                ));
+
+    }
+
     public void updateScore(int scoreUpdate,int id,final VolleyCallBack callBack)
     {
         String requestURL = serverURL + "updatescore" + "/" +scoreUpdate+ "/" +id;

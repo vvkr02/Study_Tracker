@@ -17,6 +17,7 @@ import be.kuleuven.study_tracker.R;
 public class JoinGroup extends AppCompatActivity {
     private User user;
     DataBaseHandler databasehandler = new DataBaseHandler(this);
+    GroupDataBaseHandler groupDataBaseHandler = new GroupDataBaseHandler(this);
     private EditText groupname;
 
     @Override
@@ -29,6 +30,25 @@ public class JoinGroup extends AppCompatActivity {
 
     public void onBtnJoin_Clicked(View caller)
     {
+        groupDataBaseHandler.checkIfGroupExists(groupname.getText().toString(),
+                new VolleyCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        joingroup();
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(JoinGroup.this, "Group Doesn't Exists", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+
+    }
+
+    private void joingroup() {
+
         databasehandler.joinTeam(groupname.getText().toString(),
                 user, new VolleyCallBack() {
                     @Override

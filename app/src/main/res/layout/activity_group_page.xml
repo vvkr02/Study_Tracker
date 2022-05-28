@@ -23,8 +23,8 @@
 
     <Button
         android:id="@+id/btn_create_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
         android:onClick="onCreate_Clicked"
         android:text="Create group"
         android:textSize="10sp"
@@ -32,13 +32,12 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_join_group"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_group_name"
-        app:layout_constraintVertical_bias="0.939" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <Button
         android:id="@+id/btn_join_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
         android:onClick="onJoin_Clicked"
         android:text="Join group"
         android:textSize="10sp"
@@ -46,22 +45,20 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_delete_group"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_create_group"
-        app:layout_constraintTop_toBottomOf="@+id/txt_group_name"
-        app:layout_constraintVertical_bias="0.939" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <Button
         android:id="@+id/btn_delete_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
         android:onClick="onDelete_Clicked"
         android:text="Delete Group"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_leave"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_join_group"
-        app:layout_constraintTop_toBottomOf="@+id/txt_group_name"
-        app:layout_constraintVertical_bias="0.939" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <Button
         android:id="@+id/button7"
@@ -80,10 +77,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:layout_height="533dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_create_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_group_name" />
+
+    <Button
+        android:id="@+id/btn_leave"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
+        android:onClick="onLeave_Clicked"
+        android:text=" Leave group"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_delete_group"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

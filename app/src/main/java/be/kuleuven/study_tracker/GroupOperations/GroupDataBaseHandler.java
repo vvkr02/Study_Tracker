@@ -71,6 +71,29 @@ public class GroupDataBaseHandler {
 
     }
 
+    public void checkIfGroupExists(String gname,final VolleyCallBack callBack)
+    {
+        String requestURL = serverURL + "check_if_team_exists" + "/" + gname;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+
+                            if (response.length() > 0) {
+
+                                callBack.onSuccess();
+
+                            } else {
+                                callBack.onFail();
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
+
+    }
+
     public void getGroupMembers(String groupname,final VolleyCallBack callBack)
     {
         String requestURL = serverURL + "getgroup" + "/" + groupname;

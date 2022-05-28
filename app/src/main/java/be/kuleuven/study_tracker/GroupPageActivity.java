@@ -152,7 +152,6 @@ public class GroupPageActivity extends AppCompatActivity {
 
     public void onJoin_Clicked(View caller)
     {
-        Toast.makeText(this,""+isAdmin, Toast.LENGTH_SHORT).show();
         if(isinGroup == false)
         {
             Intent intent = new Intent(this, JoinGroup.class);
@@ -171,21 +170,7 @@ public class GroupPageActivity extends AppCompatActivity {
 
         if(isinGroup == true && isAdmin == true)
         {
-            databasehandler.deleteTeam(getGroup(),new VolleyCallBack() {
-                        @Override
-                        public void onSuccess() {
-                            Intent intent = new Intent(GroupPageActivity.this, GroupPageActivity.class);
-                            intent.putExtra("User", user);
-                            Toast.makeText(GroupPageActivity.this, "Group Deleted", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onFail() {
-                            Toast.makeText(GroupPageActivity.this, "Unable to delete Group", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            );
+            deleteGroup();
         }
         else if (isinGroup == true && isAdmin == false)
         {
@@ -196,6 +181,60 @@ public class GroupPageActivity extends AppCompatActivity {
             Toast.makeText(this, "Not in any Group", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void onLeave_Clicked(View caller)
+    {
+        if(isinGroup == true && isAdmin == true)
+        {
+            deleteGroup();
+        }
+        else if (isinGroup == true && isAdmin == false)
+        {
+            leaveGroup();
+        }
+        else
+        {
+            Toast.makeText(this, "Not in any Group", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void leaveGroup() {
+
+        databasehandler.leaveGroup(user.getIdUser(),new VolleyCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        Intent intent = new Intent(GroupPageActivity.this, GroupPageActivity.class);
+                        intent.putExtra("User", user);
+                        Toast.makeText(GroupPageActivity.this, "Left Group", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(GroupPageActivity.this, "Unable to leave Group", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    private void deleteGroup() {
+
+        databasehandler.deleteTeam(getGroup(),new VolleyCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        Intent intent = new Intent(GroupPageActivity.this, GroupPageActivity.class);
+                        intent.putExtra("User", user);
+                        Toast.makeText(GroupPageActivity.this, "Group Deleted", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(GroupPageActivity.this, "Unable to delete Group", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 
     public String getGroup() {
