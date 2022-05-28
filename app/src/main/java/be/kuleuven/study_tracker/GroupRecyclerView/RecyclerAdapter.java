@@ -23,18 +23,19 @@ import CoreClasses.User;
 import Interfaces.VolleyCallBack;
 import be.kuleuven.study_tracker.GroupOperations.JoinGroup;
 import be.kuleuven.study_tracker.GroupPageActivity;
+import be.kuleuven.study_tracker.ProfileViewActivity;
 import be.kuleuven.study_tracker.R;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     Map<Integer,Integer> groupMembers;
-    List<String> userList;
     DataBaseHandler dataBaseHandler;
     ImageProcessor imageProcessor = new ImageProcessor();
+    private RecyclerViewClickListener listener;
 
-    public RecyclerAdapter(Map<Integer,Integer> groupMembers,List<String> userList) {
+    public RecyclerAdapter(Map<Integer,Integer> groupMembers,RecyclerViewClickListener listener) {
         this.groupMembers = groupMembers;
-        this.userList = userList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -78,6 +79,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return groupMembers.size();
     }
 
+    public interface RecyclerViewClickListener{
+        void onClick(View view,int position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView imageView;
         TextView name,score;
@@ -92,8 +97,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             itemView.setOnClickListener(this);
         }
 
+
+
+
         @Override
         public void onClick(View view) {
+
+            listener.onClick(view,getAdapterPosition());
 
         }
     }

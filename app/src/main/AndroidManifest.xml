@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Study_Tracker">
         <activity
+            android:name=".GroupOperations.GroupMemberProfileViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".GroupOperations.DeleteGroup"
             android:exported="false" />
         <activity

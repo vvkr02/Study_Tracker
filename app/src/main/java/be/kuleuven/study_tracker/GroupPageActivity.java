@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -16,11 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import CoreClasses.BasicDetails;
 import CoreClasses.DataBaseHandler;
 import CoreClasses.User;
 import Interfaces.VolleyCallBack;
 import be.kuleuven.study_tracker.GroupOperations.CreateGroup;
 import be.kuleuven.study_tracker.GroupOperations.GroupDataBaseHandler;
+import be.kuleuven.study_tracker.GroupOperations.GroupMemberProfileViewActivity;
 import be.kuleuven.study_tracker.GroupOperations.JoinGroup;
 import be.kuleuven.study_tracker.GroupRecyclerView.RecyclerAdapter;
 
@@ -35,8 +38,7 @@ public class GroupPageActivity extends AppCompatActivity {
     private String group;
     private RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
-
-    List<String> userList;
+    private RecyclerAdapter.RecyclerViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +47,6 @@ public class GroupPageActivity extends AppCompatActivity {
         groupname = findViewById(R.id.txt_group_name);
         user = getIntent().getParcelableExtra("User");
 
-        userList = new ArrayList<>();
-
-
-
-        userList.add("Karthik");
-        userList.add("Ash");
-        userList.add("Madhav");
 
         groupDataBaseHandler.checkIfPresent(
                 user.getIdUser(), new VolleyCallBack() {
@@ -78,13 +73,40 @@ public class GroupPageActivity extends AppCompatActivity {
 
     private void setRecyclerviewData() {
 
+        setOnClickListener();
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerAdapter = new RecyclerAdapter(groupMembers,userList);
+        recyclerAdapter = new RecyclerAdapter(groupMembers,listener);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    private void setOnClickListener() {
+        listener = new RecyclerAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), GroupMemberProfileViewActivity.class);
+                databasehandler.getBasicUserDetails(groupMembers.get(position),
+                        new VolleyCallBack() {
+                            @Override
+                            public void onSuccess() {
+                                BasicDetails basicDetails = databasehandler.basicDetails;
+                                intent.putExtra("User", user);
+                               intent.putExtra("BasicDetails",basicDetails);
+                               startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFail() {
+
+                            }
+                        }
+                );
+
+            }
+        };
     }
 
     private void getGroupMembersMap() {

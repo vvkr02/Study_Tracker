@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     private User user;
     private TextView nameTxt,scoreTxt;
     private ImageView profilePic;
+    private ImageButton profile;
 
 
     @Override
@@ -32,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         nameTxt = findViewById(R.id.txt_hello);
         scoreTxt = findViewById(R.id.txt_scoreval);
         profilePic = findViewById(R.id.img_profilepic);
+        profile = findViewById(R.id.imgBtn_profile);
         nameTxt.setText("Hello "+user.getName()+" !");
         scoreTxt.setText(user.getScoreString());
         profilePic.setImageBitmap(imageHandler.process(user.getProfilePic()));
@@ -56,4 +59,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
     }
+
+    public void onBtnProfile_Clicked(View caller)
+    {
+        Intent intent = new Intent(this,ProfileViewActivity.class);
+        intent.putExtra("User", user);
+        startActivity(intent);
+    }
+
 }
