@@ -13,17 +13,19 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 import CoreClasses.User;
 import Interfaces.VolleyCallBack;
 
 public class GroupDataBaseHandler {
     private final Context context;
     private final String serverURL = "https://studev.groept.be/api/a21pt319/";
-    private boolean isPresent;
     private String groupname;
-    private int temp;
     private boolean isAdmin;
-    private String adminn;
+    private Map<Integer, Integer> groupMap = new TreeMap<Integer,Integer>();
 
     public GroupDataBaseHandler(Context context) {
         this.context = context;
@@ -69,9 +71,9 @@ public class GroupDataBaseHandler {
 
     }
 
-    public void checkIfAdmin(int id,String groupname,final VolleyCallBack callBack)
+    public void getGroupMembers(String groupname,final VolleyCallBack callBack)
     {
-        String requestURL = serverURL + "isadmin" + "/" + groupname + "/" + id;
+        String requestURL = serverURL + "getgroup" + "/" + groupname;
         newRequestQueue(this.context).add(
                 new JsonArrayRequest(
                         Request.Method.GET,
@@ -81,7 +83,7 @@ public class GroupDataBaseHandler {
                             if (response.length() > 0) {
                                 for (int i = 0; i < response.length(); i++) {
                                     try {
-                                        setAdminn(response.getJSONObject(i).getString("groupMember"));
+                                        groupMap.put(i, response.getJSONObject(i).getInt("groupMember"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -97,6 +99,8 @@ public class GroupDataBaseHandler {
                 ));
 
     }
+
+
 
 
     public String getGroupname() {
@@ -115,11 +119,7 @@ public class GroupDataBaseHandler {
         isAdmin = admin;
     }
 
-    public String getAdminn() {
-        return adminn;
-    }
-
-    public void setAdminn(String adminn) {
-        this.adminn = adminn;
+    public Map<Integer, Integer> getGroupMap() {
+        return groupMap;
     }
 }

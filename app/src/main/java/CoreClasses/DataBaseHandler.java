@@ -43,9 +43,18 @@ public class DataBaseHandler extends AppCompatActivity {
 
     public static List<User> userList = new ArrayList<>();
     public static User user;
+    public static BasicDetails basicDetails;
 
     public DataBaseHandler(Context context){
         this.context = context;
+    }
+
+    public static BasicDetails getBasicDetails() {
+        return basicDetails;
+    }
+
+    public static void setBasicDetails(BasicDetails basicDetails) {
+        DataBaseHandler.basicDetails = basicDetails;
     }
 
 
@@ -75,6 +84,7 @@ public class DataBaseHandler extends AppCompatActivity {
                                                 response.getJSONObject(i).getInt("Score"),
                                                 response.getJSONObject(i).getString("Image")
                                         );
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -85,6 +95,38 @@ public class DataBaseHandler extends AppCompatActivity {
                             } else {
                                 callBack.onFail();
                                 progressDialog.dismiss();
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
+    }
+
+    public void getBasicUserDetails(int id, final VolleyCallBack callBack) {
+        String requestURL = serverURL + "get_allabout_user" + "/" +id;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            System.out.println(response);
+                            if (response.length() > 0) {
+                                for (int i = 0; i < response.length(); i++) {
+                                    try {
+                                        basicDetails = new BasicDetails(
+                                                response.getJSONObject(i).getInt("idUser"),
+                                                response.getJSONObject(i).getString("Name"),
+                                                response.getJSONObject(i).getInt("Score"),
+                                                response.getJSONObject(i).getString("Image")
+                                        );
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                callBack.onSuccess();
+                            } else {
+                                callBack.onFail();
                             }
                         },
                         error -> Log.d("DB: ", error.getMessage(), error)

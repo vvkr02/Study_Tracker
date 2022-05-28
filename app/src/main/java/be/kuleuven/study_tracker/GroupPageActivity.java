@@ -1,6 +1,9 @@
 package be.kuleuven.study_tracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +11,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import CoreClasses.DataBaseHandler;
 import CoreClasses.User;
 import Interfaces.VolleyCallBack;
 import be.kuleuven.study_tracker.GroupOperations.CreateGroup;
 import be.kuleuven.study_tracker.GroupOperations.GroupDataBaseHandler;
 import be.kuleuven.study_tracker.GroupOperations.JoinGroup;
+import be.kuleuven.study_tracker.GroupRecyclerView.RecyclerAdapter;
 
 public class GroupPageActivity extends AppCompatActivity {
     private User user;
@@ -22,7 +31,12 @@ public class GroupPageActivity extends AppCompatActivity {
     private TextView groupname;
     private boolean isinGroup = false;
     private boolean isAdmin = false;
+    private Map<Integer,Integer> groupMembers= new TreeMap<Integer,Integer>();
     private String group;
+    private RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
+
+    List<String> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +45,13 @@ public class GroupPageActivity extends AppCompatActivity {
         groupname = findViewById(R.id.txt_group_name);
         user = getIntent().getParcelableExtra("User");
 
+        userList = new ArrayList<>();
+
+
+
+        userList.add("Karthik");
+        userList.add("Ash");
+        userList.add("Madhav");
 
         groupDataBaseHandler.checkIfPresent(
                 user.getIdUser(), new VolleyCallBack() {
@@ -40,6 +61,8 @@ public class GroupPageActivity extends AppCompatActivity {
                         setGroup(groupDataBaseHandler.getGroupname());
                         groupname.setText(getGroup());
                         isAdmin = groupDataBaseHandler.getisAdmin();
+
+                        getGroupMembersMap();
                     }
 
                     @Override
@@ -50,8 +73,37 @@ public class GroupPageActivity extends AppCompatActivity {
                 }
         );
 
+
     }
 
+    private void setRecyclerviewData() {
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerAdapter = new RecyclerAdapter(groupMembers,userList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(recyclerAdapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    private void getGroupMembersMap() {
+
+        groupDataBaseHandler.getGroupMembers(
+                getGroup(), new VolleyCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        groupMembers=groupDataBaseHandler.getGroupMap();
+                        setRecyclerviewData();
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                }
+        );
+    }
 
 
     public void onBack_Clicked(View caller)
