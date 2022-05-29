@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        username.setText("sadgirl");
-        password.setText("123");
+        username.setText("ash");
+        password.setText("asd");
 
     }
 

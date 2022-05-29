@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,8 +32,17 @@ public class ChallengeDatabaseHandler extends AppCompatActivity {
     private final Context context;
     private final String serverURL = "https://studev.groept.be/api/a21pt319/";
     ImageProcessor imageProcessor = new ImageProcessor();
+    boolean isAnswered;
 
     Bitmap getQuestionBitmap;
+
+    public boolean getisAnswered() {
+        return isAnswered;
+    }
+
+    public void setAnswered(boolean answered) {
+        isAnswered = answered;
+    }
 
     public void setGetQuestionBitmap(Bitmap getQuestionBitmap) {
         this.getQuestionBitmap = getQuestionBitmap;
@@ -154,6 +164,42 @@ public class ChallengeDatabaseHandler extends AppCompatActivity {
                         response -> {
 
                             if (response.length() > 0) {
+
+                                callBack.onSuccess();
+
+                            } else {
+                                callBack.onFail();
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
+
+    }
+
+    public void checkIfAnswered(int sender,int receiver,final VolleyCallBack callBack)
+    {
+        String requestURL = serverURL + "checkifAnswered" + "/" + sender + "/"+receiver;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+
+                            if (response.length() > 0) {
+                                try {
+                                    String temp = response.getJSONObject(0).getString("Answer");
+                                    if(temp.equals("null"))
+                                    {
+                                        setAnswered(false);
+                                    }
+                                    else
+                                    {
+                                        setAnswered(true);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
                                 callBack.onSuccess();
 
