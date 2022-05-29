@@ -167,7 +167,6 @@ public class DataBaseHandler extends AppCompatActivity {
                 return params;
             }
         });
-        /*requestQueue.add(submitRequest);*/
 
     }
 

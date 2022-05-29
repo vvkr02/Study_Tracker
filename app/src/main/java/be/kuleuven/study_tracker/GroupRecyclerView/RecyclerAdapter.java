@@ -27,6 +27,7 @@ import Interfaces.VolleyCallBack;
 import be.kuleuven.study_tracker.Challenge.AnswerActivity;
 import be.kuleuven.study_tracker.Challenge.ChallengeActivity;
 import be.kuleuven.study_tracker.Challenge.GradeActivity;
+import be.kuleuven.study_tracker.ChallengeOperations.ChallengeDatabaseHandler;
 import be.kuleuven.study_tracker.GroupOperations.GroupMemberProfileViewActivity;
 import be.kuleuven.study_tracker.GroupOperations.JoinGroup;
 import be.kuleuven.study_tracker.GroupPageActivity;
@@ -42,6 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     Context context;
     int second;
     int first;
+    ChallengeDatabaseHandler cHandler;
 
     public RecyclerAdapter(Map<Integer,Integer> groupMembers,int first,User user) {
         this.groupMembers = groupMembers;
@@ -58,6 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         View view = layoutInflater.inflate(R.layout.row_item,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         dataBaseHandler = new DataBaseHandler(parent.getContext());
+        cHandler = new ChallengeDatabaseHandler(parent.getContext());  
 
         return viewHolder;
     }
@@ -165,20 +168,40 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         challenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ChallengeActivity.class);
-                intent.putExtra("Current",first);
-                intent.putExtra("Target",groupMembers.get(i));
-                context.startActivity(intent);
+                
+                cHandler.checkIfQuestionExists(first, groupMembers.get(i), new VolleyCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(context, "The last Question you sent to this person is Pending", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onFail() {
+                        challenge(i);
+
+                    }
+                });
+
+                
 
             }
         });
         answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, AnswerActivity.class);
-                intent.putExtra("Current",first);
-                intent.putExtra("Target",groupMembers.get(i));
-                context.startActivity(intent);
+                if(first == groupMembers.get(i))
+                {
+                    Toast.makeText(context, "Can't Challenge/Answer/Grade Yourself", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Intent intent = new Intent(context, AnswerActivity.class);
+                    intent.putExtra("Current",first);
+                    intent.putExtra("Target",groupMembers.get(i));
+                    context.startActivity(intent);
+                }
+
 
             }
         });
@@ -186,10 +209,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         grade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, GradeActivity.class);
-                intent.putExtra("Current",first);
-                intent.putExtra("Target",groupMembers.get(i));
-                context.startActivity(intent);
+                if(first == groupMembers.get(i))
+                {
+                    Toast.makeText(context, "Can't Challenge/Answer/Grade Yourself", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Intent intent = new Intent(context, GradeActivity.class);
+                    intent.putExtra("Current",first);
+                    intent.putExtra("Target",groupMembers.get(i));
+                    context.startActivity(intent);
+                }
+
 
             }
         });
@@ -199,5 +230,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
         dialog.show();
+    }
+
+    private void challenge(int i) {
+
+        if(first == groupMembers.get(i))
+        {
+            Toast.makeText(context, "Can't Challenge/Answer/Grade Yourself", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Intent intent = new Intent(context, ChallengeActivity.class);
+            intent.putExtra("Current",first);
+            intent.putExtra("Target",groupMembers.get(i));
+            intent.putExtra("User", user);
+            context.startActivity(intent);
+
+        }
     }
 }
