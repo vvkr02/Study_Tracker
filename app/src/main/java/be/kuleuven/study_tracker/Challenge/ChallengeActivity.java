@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +24,13 @@ public class ChallengeActivity extends AppCompatActivity {
 
     int current,target;
     private ImageView imageView;
+    private TextView label;
     User user;
     private int PICK_IMAGE_REQUEST = 111;
     private Bitmap bitmap;
     ImageProcessor imageProcessor = new ImageProcessor();
     ChallengeDatabaseHandler cHandler = new ChallengeDatabaseHandler(this);
+    Button pick,challenge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class ChallengeActivity extends AppCompatActivity {
         current =getIntent().getIntExtra("Current",0);
         target =getIntent().getIntExtra("Target",0);
         imageView = findViewById(R.id.image_view);
+        pick = findViewById(R.id.btn_prof);
+        challenge = findViewById(R.id.btn_challenge);
+        label = findViewById(R.id.textView3);
 
     }
 
@@ -74,6 +80,9 @@ public class ChallengeActivity extends AppCompatActivity {
     public void onBtnPostClicked(View view) {
         cHandler.addQuestiontoDB(imageProcessor.toBase64(bitmap),current,target);
         Toast.makeText(this, "Question sent", Toast.LENGTH_SHORT).show();
+        pick.setVisibility(View.INVISIBLE);
+        challenge.setVisibility(View.INVISIBLE);
+        label.setText("Question you Uploaded");
     }
 
     public void onBtnBackChallenge_Clicked(View caller)

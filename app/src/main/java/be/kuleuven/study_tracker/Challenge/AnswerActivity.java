@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class AnswerActivity extends AppCompatActivity {
     int current,target;
     User user;
     ImageView img_question,img_answer;
+    private Button pick,submit;
     private int PICK_IMAGE_REQUEST = 111;
     private Bitmap bitmap;
     ImageProcessor imageProcessor = new ImageProcessor();
@@ -36,6 +38,8 @@ public class AnswerActivity extends AppCompatActivity {
         target =getIntent().getIntExtra("Target",0);
         img_question = findViewById(R.id.img_question);
         img_answer = findViewById(R.id.img_answer);
+        pick = findViewById(R.id.btn_pick_answer);
+        submit = findViewById(R.id.btn_submit_answer);
 
         cHandler.getQuestion(target, current, new VolleyCallBack() {
             @Override
@@ -86,6 +90,8 @@ public class AnswerActivity extends AppCompatActivity {
     public void btnSubmit_Clicked(View view) {
         cHandler.addAnswertoDB(imageProcessor.toBase64(bitmap),target,current);
         Toast.makeText(this, "Answer sent", Toast.LENGTH_SHORT).show();
+        pick.setVisibility(View.INVISIBLE);
+        submit.setVisibility(View.INVISIBLE);
     }
 
     public void onBtnBackAnswer_Clicked(View view) {

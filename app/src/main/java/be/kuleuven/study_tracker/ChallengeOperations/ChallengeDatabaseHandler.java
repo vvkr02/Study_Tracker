@@ -34,7 +34,15 @@ public class ChallengeDatabaseHandler extends AppCompatActivity {
     ImageProcessor imageProcessor = new ImageProcessor();
     boolean isAnswered;
 
-    Bitmap getQuestionBitmap;
+    Bitmap getQuestionBitmap,getAnswerBitamp;
+
+    public Bitmap getGetAnswerBitamp() {
+        return getAnswerBitamp;
+    }
+
+    public void setGetAnswerBitamp(Bitmap getAnswerBitamp) {
+        this.getAnswerBitamp = getAnswerBitamp;
+    }
 
     public boolean getisAnswered() {
         return isAnswered;
@@ -104,6 +112,33 @@ public class ChallengeDatabaseHandler extends AppCompatActivity {
 
                                 try {
                                     setGetQuestionBitmap(imageProcessor.process(response.getJSONObject(0).getString("Question")));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                callBack.onSuccess();
+                            } else {
+                                callBack.onFail();
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
+    }
+
+    public void getAnswer(int sender, int receiver, final VolleyCallBack callBack) {
+        String requestURL = serverURL + "getAnswer" + "/" +sender + "/" + receiver;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            System.out.println(response);
+                            if (response.length() > 0) {
+
+                                try {
+                                    setGetAnswerBitamp(imageProcessor.process(response.getJSONObject(0).getString("Answer")));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -210,6 +245,70 @@ public class ChallengeDatabaseHandler extends AppCompatActivity {
                         error -> Log.d("DB: ", error.getMessage(), error)
                 ));
 
+    }
+
+    public void wrongAnswerDB(int id) {
+        String requestURL = serverURL + "score_whenwrong" + "/" +id;
+        ProgressDialog progressDialog = new ProgressDialog(this.context);
+        progressDialog.setMessage("Updating Score");
+        progressDialog.show();
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            System.out.println(response);
+                            if (response.length() > 0) {
+                                progressDialog.dismiss();
+
+                            } else {
+
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
+    }
+
+    public void correctAnswerDB(int id,String score) {
+        String requestURL = serverURL + "score_whenright" + "/" +score + "/"+id;
+        ProgressDialog progressDialog = new ProgressDialog(this.context);
+        progressDialog.setMessage("Updating Score");
+        progressDialog.show();
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            System.out.println(response);
+                            if (response.length() > 0) {
+                                progressDialog.dismiss();
+
+                            } else {
+                                progressDialog.dismiss();
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
+    }
+
+    public void clearQAPair(int sender,int receiver) {
+        String requestURL = serverURL + "clear_QApair" + "/" +sender + "/"+receiver;
+        newRequestQueue(this.context).add(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        requestURL,
+                        null,
+                        response -> {
+                            System.out.println(response);
+                            if (response.length() > 0) {
+
+                            } else {
+                            }
+                        },
+                        error -> Log.d("DB: ", error.getMessage(), error)
+                ));
     }
 
 }
