@@ -234,10 +234,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         grade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cHandler.checkIfQuestionExists(groupMembers.get(i),first,  new VolleyCallBack() {
+                cHandler.checkIfQuestionExists(first,groupMembers.get(i),  new VolleyCallBack() {
                     @Override
                     public void onSuccess() {
-                        cHandler.checkIfAnswered(groupMembers.get(i),first, new VolleyCallBack() {
+                        cHandler.checkIfAnswered(first,groupMembers.get(i), new VolleyCallBack() {
                             @Override
                             public void onSuccess() {
 

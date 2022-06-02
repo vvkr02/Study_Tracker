@@ -22,7 +22,7 @@ import Interfaces.VolleyCallBack;
 
 public class TimerActivity extends AppCompatActivity {
     private User user;
-    private int START_TIME_IN_MILLIS = 600000;
+    private int START_TIME_IN_MILLIS = 60000;
     private TextView mTextViewCountDown;
     private Button mButtonStartPause;
     private Button mButtonReset;
