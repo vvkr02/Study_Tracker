@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupOperations.CreateGroup">
+    tools:context=".GroupOperations.CreateGroup"
+    android:background="@drawable/gradient_background">
 
     <TextView
         android:id="@+id/lbl_JoinTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Group"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,6 +29,8 @@
         android:ems="10"
         android:hint="Enter Group Name"
         android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -40,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="Group Name:"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +55,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl_JoinTeam"
         app:layout_constraintVertical_bias="0.111" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_joinok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

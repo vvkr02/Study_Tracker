@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Challenge.GradeActivity">
+    tools:context=".Challenge.GradeActivity"
+    android:background="@drawable/gradient_background">
 
     <TextView
         android:id="@+id/lbl_solution"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Solution"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/img_solution"
@@ -32,7 +34,8 @@
         app:layout_constraintVertical_bias="0.386"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_back_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +65,8 @@
         app:layout_constraintTop_toBottomOf="@+id/img_solution"
         app:layout_constraintVertical_bias="0.239" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_submit_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_wrong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +91,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.809" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_correct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,6 +112,8 @@
         android:ems="10"
         android:hint="Enter grade (0-50)"
         android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.777"

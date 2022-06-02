@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Challenge.ChallengeActivity">
+    tools:context=".Challenge.ChallengeActivity"
+    android:background="@drawable/gradient_background">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upload the Question here:"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +33,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_prof"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +46,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +60,8 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_back_challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

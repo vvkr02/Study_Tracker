@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Challenge.AnswerActivity">
+    tools:context=".Challenge.AnswerActivity"
+    android:background="@drawable/gradient_background">
 
     <TextView
         android:id="@+id/lbl_Question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Question:"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,7 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/button4"
         android:layout_width="76dp"
         android:layout_height="42dp"
@@ -50,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Answer:"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/img_answer"
@@ -69,7 +73,8 @@
         app:layout_constraintTop_toBottomOf="@+id/img_question"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_pick_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +86,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_answer" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/custom_button"
         android:id="@+id/btn_submit_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

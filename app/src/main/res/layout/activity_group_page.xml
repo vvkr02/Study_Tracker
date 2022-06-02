@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".GroupPageActivity"
     tools:layout_editor_absoluteX="-13dp"
     tools:layout_editor_absoluteY="270dp">
@@ -12,6 +13,10 @@
         android:id="@+id/txt_group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="serif-monospace"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,10 +26,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.091" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_group"
         android:layout_width="85dp"
         android:layout_height="50dp"
+        android:background="@drawable/custom_button"
         android:onClick="onCreate_Clicked"
         android:text="Create group"
         android:textSize="10sp"
@@ -34,10 +40,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_join_group"
         android:layout_width="85dp"
         android:layout_height="50dp"
+        android:background="@drawable/custom_button"
         android:onClick="onJoin_Clicked"
         android:text="Join group"
         android:textSize="10sp"
@@ -47,10 +54,11 @@
         app:layout_constraintStart_toEndOf="@+id/btn_create_group"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_delete_group"
         android:layout_width="85dp"
         android:layout_height="50dp"
+        android:background="@drawable/custom_button"
         android:onClick="onDelete_Clicked"
         android:text="Delete Group"
         android:textSize="10sp"
@@ -60,10 +68,11 @@
         app:layout_constraintStart_toEndOf="@+id/btn_join_group"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
         android:onClick="onBack_Clicked"
         android:text="Back"
         android:textSize="12sp"
@@ -78,16 +87,18 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="500dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_create_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_group_name" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_leave"
         android:layout_width="85dp"
         android:layout_height="50dp"
+        android:background="@drawable/custom_button"
         android:onClick="onLeave_Clicked"
         android:text=" Leave group"
         android:textSize="10sp"

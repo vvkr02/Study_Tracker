@@ -184,7 +184,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void updateScore(int start_time_in_millis) {
 
-        dataBaseHandler.updateScore(start_time_in_millis/60000,user.getIdUser(),new VolleyCallBack() {
+        dataBaseHandler.updateScore((start_time_in_millis/60000)*100,user.getIdUser(),new VolleyCallBack() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TimerActivity.this, "Score Updated", Toast.LENGTH_SHORT).show();
