@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -12,6 +13,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
 
 import CoreClasses.DataBaseHandler;
 import CoreClasses.ImageProcessor;
@@ -24,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView nameTxt,scoreTxt;
     private ImageView profilePic;
     private ImageButton profile;
+    BarChart barChart;
 
 
     @Override
@@ -38,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         nameTxt.setText("Hello "+user.getName()+" !");
         scoreTxt.setText(user.getScoreString());
         profilePic.setImageBitmap(imageHandler.process(user.getProfilePic()));
+
     }
 
     public void onBtnTimer_Clicked(View caller)

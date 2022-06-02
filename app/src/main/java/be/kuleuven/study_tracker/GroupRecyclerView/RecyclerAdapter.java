@@ -234,17 +234,46 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         grade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(first == groupMembers.get(i))
-                {
-                    Toast.makeText(context, "Can't Challenge/Answer/Grade Yourself", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Intent intent = new Intent(context, GradeActivity.class);
-                    intent.putExtra("Current",first);
-                    intent.putExtra("Target",groupMembers.get(i));
-                    context.startActivity(intent);
-                }
+                cHandler.checkIfQuestionExists(groupMembers.get(i),first,  new VolleyCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        cHandler.checkIfAnswered(groupMembers.get(i),first, new VolleyCallBack() {
+                            @Override
+                            public void onSuccess() {
+
+                                if(cHandler.getisAnswered()==true)
+                                {
+                                    grade(i);
+                                }
+                                else
+                                {
+                                    Toast.makeText(context, "You don't have a question", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFail() {
+
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(context, "No pending Question", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
+
+
+
+
 
 
             }
@@ -255,6 +284,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
         dialog.show();
+    }
+
+    private void grade(int i) {
+        if(first == groupMembers.get(i))
+        {
+            Toast.makeText(context, "Can't Challenge/Answer/Grade Yourself", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Intent intent = new Intent(context, GradeActivity.class);
+            intent.putExtra("Current",first);
+            intent.putExtra("Target",groupMembers.get(i));
+            context.startActivity(intent);
+        }
     }
 
     private void answer(int i) {
